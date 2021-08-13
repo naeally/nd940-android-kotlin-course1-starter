@@ -11,6 +11,8 @@ import androidx.navigation.findNavController
 import com.udacity.shoestore.R
 import com.udacity.shoestore.databinding.FragmentShoeDetailBinding
 import com.udacity.shoestore.models.Shoe
+import java.util.*
+import kotlin.random.Random
 
 /**
  * A fragment representing a list of Items.
@@ -29,10 +31,10 @@ class ShoeFragment : Fragment() {
         viewModel = ViewModelProvider(requireActivity())[ShoeListViewModel::class.java]
         binding.saveButton.setOnClickListener {
             viewModel.addShoe(
-                binding.shoeName.text.toString(),
-                binding.shoeSize.text.toString().toDouble(),
-                binding.company.text.toString(),
-                binding.description.text.toString()
+                binding.shoeName.text?.toString() ?: UUID.randomUUID().toString(),
+                binding.shoeSize.text?.toString()?.toDoubleOrNull() ?: 0.0,
+                binding.company.text?.toString() ?: "",
+                binding.description.text?.toString() ?: ""
             )
             it.findNavController().navigate(ShoeFragmentDirections.actionCreateShoeFragmentToShoeListFragment())
         }
